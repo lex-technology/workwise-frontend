@@ -1,0 +1,435 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 246 100% 50%;  /* Updated to indigo */
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 246 100% 50%;
+ 
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-gray-100;
+  }
+}
+
+/* Add these styles */
+.react-pdf__Page__textContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+.react-pdf__Page__textContent > span {
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0% 0%;
+  opacity: 1 !important;
+}
+
+/* PDF viewer styles */
+.react-pdf__Page__textContent {
+  z-index: 1;
+  cursor: text;
+  opacity: 1;
+}
+
+.react-pdf__Page__textContent > div {
+  opacity: 1 !important;
+  color: transparent;
+}
+
+.react-pdf__Page__textContent mark {
+  color: black !important;
+}
+
+/* Ensure highlights are visible */
+mark {
+  all: unset;
+  background-color: yellow;
+  color: black !important;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+/* PDF text layer styles */
+.react-pdf__Page__textContent {
+  z-index: 1;
+  opacity: 1 !important;
+}
+
+.react-pdf__Page__textContent > div {
+  color: transparent;
+}
+
+.react-pdf__Page__textContent > div > div {
+  color: black !important;
+}
+
+/* Resume Styles */
+.resume-container {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.name-heading {
+  font-size: 2.25rem !important;
+  font-weight: 700 !important;
+  color: #1f2937 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.contact-info {
+  font-size: 1rem;
+  color: #4b5563;
+  margin-bottom: 0.25rem;
+}
+
+.location {
+  font-size: 1rem;
+  color: #4b5563;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section-heading {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  color: #2563eb !important;
+  border-bottom: 2px solid #2563eb;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem !important;
+}
+
+.job-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  color: #1f2937 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.date {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.responsibilities {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.responsibilities li {
+  margin-bottom: 0.25rem;
+  color: #374151;
+}
+
+.degree {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: #1f2937 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.school {
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.skills-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.75rem !important;
+  list-style: none !important;
+  padding: 0 !important;
+}
+
+.skill-item {
+  background: #f3f4f6;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+/* Editor overrides */
+.ProseMirror {
+  outline: none !important;
+  padding: 0 !important;
+}
+
+.ProseMirror p {
+  margin: 0 !important;
+}
+
+/* Add these to your existing CSS */
+.ProseMirror ul {
+  list-style-type: disc !important;
+  margin-left: 1.25rem !important;
+}
+
+.ProseMirror li {
+  margin-bottom: 0.25rem !important;
+}
+
+.ProseMirror h2 {
+  border-bottom: 1px solid black !important;
+}
+
+.ProseMirror div {
+  margin: inherit !important;
+}
+
+.prose {
+  max-width: none !important;
+}
+
+.prose ul {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.prose li {
+  margin-top: 0 !important;
+  margin-bottom: 0.25rem !important;
+  padding-left: 0.25rem !important;
+}
+
+.prose p {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Add or update these styles */
+.ProseMirror {
+  padding: 0 !important;
+}
+
+.ProseMirror h1 {
+  font-size: 2rem !important;
+  margin: 0 !important;
+  font-weight: bold !important;
+}
+
+.ProseMirror h2 {
+  font-size: 0.875rem !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+  border-bottom: 1px solid black !important;
+  padding-bottom: 0.25rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.ProseMirror ul {
+  list-style-type: disc !important;
+  margin: 0 0 0.5rem 1.25rem !important;
+  padding: 0 !important;
+}
+
+.ProseMirror li {
+  font-size: 0.875rem !important;
+  margin-bottom: 0.5rem !important;
+  line-height: 1.4 !important;
+}
+
+.ProseMirror div {
+  margin: inherit !important;
+}
+
+.prose {
+  max-width: none !important;
+  padding: 2rem !important;
+}
+
+/* Add these styles to override TipTap's default table styling */
+.ProseMirror table {
+  border: 1px solid black !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+  margin-bottom: 3rem !important;
+}
+
+.ProseMirror td {
+  border: 1px solid black !important;
+  padding: 8px !important;
+  vertical-align: top !important;
+}
+
+.ProseMirror tr {
+  border: 1px solid black !important;
+}
+
+.ProseMirror td[style*="text-align: right"] {
+  text-align: right !important;
+}
+
+/* AI Analyzer Button Styles */
+.ai-analyzer-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  margin-left: 12px;
+}
+
+/* Default state */
+.ai-analyzer-button:not(.improved) {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.ai-analyzer-button:not(.improved):hover {
+  background-color: #e5e7eb;
+}
+
+/* Improved state */
+.ai-analyzer-button.improved {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.ai-analyzer-button.improved:hover {
+  background-color: #bbf7d0;
+}
+
+/* Button icon */
+.button-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Section title container */
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.ai-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.ai-button:hover {
+  opacity: 0.9;
+}
+
+.ai-button.improved {
+  background-color: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+.ai-button.improved:hover {
+  background-color: #bbf7d0 !important;
+}
+
+.text-green-700 {
+  color: #15803d;
+}
+
+.bg-green-100 {
+  background-color: #dcfce7;
+}
+
+.hover\:bg-green-200:hover {
+  background-color: #bbf7d0;
+}
+
+.text-blue-700 {
+  color: #1d4ed8;
+}
+
+.bg-blue-100 {
+  background-color: #dbeafe;
+}
+
+.hover\:bg-blue-200:hover {
+  background-color: #bfdbfe;
+}
+
+.react-datepicker {
+  font-family: inherit;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(229, 231, 235);
+}
+
+.react-datepicker__header {
+  background-color: rgb(249, 250, 251);
+  border-bottom: 1px solid rgb(229, 231, 235);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.react-datepicker__day--selected {
+  background-color: rgb(79, 70, 229) !important;
+  color: white !important;
+}
+
+.react-datepicker__day:hover {
+  background-color: rgb(243, 244, 246);
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: rgb(199, 210, 254);
+  color: rgb(79, 70, 229);
+}
+
+.react-datepicker__triangle {
+  display: none;
+}

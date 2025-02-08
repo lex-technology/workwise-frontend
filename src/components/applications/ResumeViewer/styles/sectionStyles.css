@@ -1,0 +1,45 @@
+.clickable-section {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  position: relative;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+}
+
+.clickable-section:hover {
+  background-color: #f8fafc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-color: #3b82f6;
+}
+
+.ai-analysis-indicator {
+  float: right;
+  font-size: 0.75rem;
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: #eff6ff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  margin-left: 0.5rem;
+}
+
+.clickable-section:hover .ai-analysis-indicator {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.section-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: black;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} 
