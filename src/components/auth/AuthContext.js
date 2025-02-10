@@ -177,16 +177,25 @@ export function AuthProvider({ children }) {
 
   const signup = async (email, password) => {
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password
-      })
+      // Replace direct Supabase call with backend API call
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-      if (error) throw error
-      return data
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.detail || 'Signup failed');
+      }
+
+      const data = await response.json();
+      return data;
     } catch (error) {
-      console.error('Signup error:', error)
-      throw error
+      console.error('Signup error:', error);
+      throw error;
     }
   }
 

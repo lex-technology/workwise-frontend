@@ -17,8 +17,14 @@ export default function SignupForm() {
     setLoading(true)
 
     try {
-      await signup(email, password)
-      router.push('/login') // Redirect to login after successful signup
+      const result = await signup(email, password)
+      
+      // Handle email verification flow
+      if (result.email_verification_required) {
+        router.push('/auth/verify') // Add a verification page to inform users
+      } else {
+        router.push('/login')
+      }
     } catch (error) {
       setError(error.message)
     } finally {
