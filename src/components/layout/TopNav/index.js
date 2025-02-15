@@ -1,6 +1,6 @@
 'use client'
 import { useState, useRef } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { FileText, User, DollarSign, HeadphonesIcon } from 'lucide-react'
 import { useAuth } from '@/components/auth/AuthContext'
@@ -9,6 +9,7 @@ import ProfileDropdown from './ProfileDropdown'
 export default function TopNav() {
   const pathname = usePathname()
   const { user } = useAuth()
+  const router = useRouter()
   const [showProfileMenu, setShowProfileMenu] = useState(false)
   const buttonRef = useRef(null)
 
@@ -23,13 +24,22 @@ export default function TopNav() {
     setShowProfileMenu(!showProfileMenu)
   }
 
+  const handleLogoClick = (e) => {
+    e.preventDefault()
+    router.push(user ? '/dashboard' : '/')
+  }
+
   return (
     <div className="w-full bg-[#2A2B3D] text-white h-16">
       <div className="container mx-auto px-4 h-full">
         <div className="flex items-center justify-between h-full">
-          <Link href="/" className="text-xl font-semibold">
+          <a 
+            href="#" 
+            onClick={handleLogoClick}
+            className="text-xl font-semibold cursor-pointer"
+          >
             WorkWise
-          </Link>
+          </a>
 
           <div className="flex items-center space-x-4">
             {/* Always visible navigation items */}
@@ -77,7 +87,6 @@ export default function TopNav() {
                     }`}
                   >
                     <User size={18} />
-                    {/* <span>{user.email}</span> */}
                   </button>
 
                   {showProfileMenu && (

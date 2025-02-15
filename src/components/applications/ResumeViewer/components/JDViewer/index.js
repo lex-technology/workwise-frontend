@@ -6,15 +6,15 @@ import { Loader2 } from 'lucide-react'
 import { useAuth } from '@/components/auth/AuthContext'
 
 export default function JDViewer({ resumeData, refreshData }) {
-  console.log('JDViewer component mounted')  // Add this
-  if (!resumeData) {
-    console.log('No resumeData received in JDViewer')  // Add this
-    return null
-  }
-  console.log('JDViewer received data:', resumeData) 
+  // Move all hooks to the top level
   const { getToken } = useAuth()
   const [isAnalyzing, setIsAnalyzing] = useState(false)
-  
+
+  // Early return with proper null check
+  if (!resumeData) {
+    return null
+  }
+
   const skillTypeStyles = {
     'technical skills': 'bg-blue-100/80',
     'domain knowledge': 'bg-purple-100/80',
@@ -173,20 +173,12 @@ export default function JDViewer({ resumeData, refreshData }) {
   }
 
   const processedJD = useMemo(() => {
-    console.log('Processing JD with data:', {
-      hasJobDescription: !!resumeData?.job_description,
-      hasJDAnalysis: !!resumeData?.jd_analysis,
-      analysisContent: resumeData?.jd_analysis,
-      analysisStatus: resumeData?.analysis_status
-    })
-  
     if (!resumeData?.job_description) {
       return []
     }
   
     // Changed condition: if we have jd_analysis array, use it
-    if (resumeData.jd_analysis && Array.isArray(resumeData.jd_analysis) && resumeData.jd_analysis.length > 0) {
-      console.log('Using existing analysis:', resumeData.jd_analysis)
+    if (resumeData?.jd_analysis && Array.isArray(resumeData.jd_analysis) && resumeData.jd_analysis.length > 0) {
       
       const sortedAnalysis = [...resumeData.jd_analysis].sort((a, b) => 
         b.line_text.length - a.line_text.length
@@ -236,7 +228,7 @@ export default function JDViewer({ resumeData, refreshData }) {
   
     // If no analysis, show plain text
     return [{ type: 'text', content: resumeData.job_description }]
-  }, [resumeData?.job_description, resumeData?.jd_analysis])
+  }, [resumeData?.job_description, resumeData?.jd_analysis, resumeData?.analysis_status]) // Add analysis_status to dependencies
 
   // const renderContent = (segments) => {
   //   return segments.map((segment, index) => {

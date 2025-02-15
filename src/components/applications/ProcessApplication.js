@@ -99,17 +99,16 @@ export default function ProcessApplication() {
     } else if (e.type === "dragleave") {
       setDragActive(false)
     }
-  }, [])
-
+  }, []) // This is fine as it doesn't use any external dependencies
+  
   const handleDrop = useCallback((e) => {
     e.preventDefault()
     e.stopPropagation()
     setDragActive(false)
-
     const file = e.dataTransfer.files?.[0]
     handleFile(file)
-  }, [])
-
+  }, [handleFile]) // Add handleFile as dependency
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsProcessing(true)
