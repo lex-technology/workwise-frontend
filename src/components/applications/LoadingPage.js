@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState, useRef, useMemo } from 'react'
-import { Loader2, AlertCircle, CheckCircle2, Info, Clock } from 'lucide-react'
+import { Loader, AlertCircle, CheckCircle2, Info, Clock } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/components/auth/AuthContext'
 import { toast } from 'sonner'
@@ -198,7 +198,7 @@ export default function LoadingPage() {
           </div>
         ) : (
           <div className="text-center">
-            <Loader2 className="mx-auto h-12 w-12 text-cyan-600 animate-spin mb-6" />
+            <Loader className="mx-auto h-12 w-12 text-cyan-600 animate-spin mb-6" />
             <h1 className="text-xl font-semibold text-cyan-800 mb-4">
               {isReusingResume ? 'Processing Your Application' : 'Analyzing Your Resume'}
             </h1>
