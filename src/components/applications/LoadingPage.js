@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import { Loader2, AlertCircle, CheckCircle2, Info, Clock } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/components/auth/AuthContext'
@@ -11,23 +11,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-export default function LoadingPage() {
-  const { getToken } = useAuth()
-  const router = useRouter()
-  const [error, setError] = useState('')
-  const [currentStep, setCurrentStep] = useState(0)
-  const [progress, setProgress] = useState(0)
-  const [showTip, setShowTip] = useState(false)
-  const isProcessing = useRef(false)
-  const hasStartedProcessing = useRef(false)
-  const processingStartTime = useRef(null)
-  const [timeRemaining, setTimeRemaining] = useState(null)
-
-  // Track individual operation states
-  const [isReusingResume, setIsReusingResume] = useState(false)
-
-  // Modified steps to reflect actual flow
-  const steps = [
+const useLoadingSteps = () => {
+  return useMemo(() => [
     { 
       id: 0, 
       title: 'Initializing', 
@@ -56,8 +41,26 @@ export default function LoadingPage() {
       weight: 20,
       tip: 'Almost there! Setting up your personalized view'
     }
-  ]
+  ], []) // Empty dependency array since steps are static
+}
 
+export default function LoadingPage() {
+  const steps = useLoadingSteps()
+  const { getToken } = useAuth()
+  const router = useRouter()
+  const [error, setError] = useState('')
+  const [currentStep, setCurrentStep] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const [showTip, setShowTip] = useState(false)
+  const isProcessing = useRef(false)
+  const hasStartedProcessing = useRef(false)
+  const processingStartTime = useRef(null)
+  const [timeRemaining, setTimeRemaining] = useState(null)
+
+  // Track individual operation states
+  const [isReusingResume, setIsReusingResume] = useState(false)
+
+  // Modified steps to reflect actual flow
   const totalWeight = steps.reduce((acc, step) => acc + step.weight, 0)
   const estimatedTotalTime = 8000 // Adjusted for both operations
 
@@ -154,7 +157,9 @@ export default function LoadingPage() {
       const elapsedTime = Date.now() - processingStartTime.current
       const rawProgress = Math.min((elapsedTime / estimatedTotalTime) * 100, 99)
       
+      const totalWeight = steps.reduce((acc, step) => acc + step.weight, 0)
       let accumulatedWeight = 0
+      
       for (let i = 0; i < steps.length; i++) {
         accumulatedWeight += (steps[i].weight / totalWeight) * 100
         if (rawProgress <= accumulatedWeight) {
@@ -179,7 +184,7 @@ export default function LoadingPage() {
     }, 50)
 
     return () => clearInterval(progressInterval)
-  }, [currentStep, error, estimatedTotalTime, steps, totalWeight])
+  }, [currentStep, error, estimatedTotalTime, steps]) 
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-cyan-50 to-cyan-100">

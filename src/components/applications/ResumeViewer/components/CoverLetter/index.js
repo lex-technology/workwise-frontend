@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { QUESTIONS } from '@/components/applications/ResumeViewer/config/cover-letter.config'
 // import { exportCoverLetterToPDF, exportCoverLetterToWord } from '../../utils/exportUtils'
 import { useAuth } from '@/components/auth/AuthContext'
@@ -19,8 +19,14 @@ export default function CoverLetterBuilder({
   const { user } = useAuth()
   const { fetchWithAuth } = useApi()
 
-  // added
-  // const { checkCredits, refreshProfile } = useProfileUpdate()
+  // Move loadingSteps to useMemo to prevent recreation
+  const loadingSteps = useMemo(() => [
+    "Analyzing your experience...",
+    "Processing your answers...",
+    "Crafting your cover letter...",
+    "Applying final touches..."
+  ], [])
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState(initialData?.answers || {})
   const [generatedLetter, setGeneratedLetter] = useState(initialData?.cover_letter || '')
@@ -29,24 +35,8 @@ export default function CoverLetterBuilder({
   const [isEditing, setIsEditing] = useState(false)
   const [editableLetter, setEditableLetter] = useState('')
   const [loadingStep, setLoadingStep] = useState(0)
-  const loadingSteps = [
-    "Analyzing your experience...",
-    "Processing your answers...",
-    "Crafting your cover letter...",
-    "Applying final touches..."
-  ]
 
-  // Update states when initialData changes
-  useEffect(() => {
-    if (initialData?.answers) {
-      setAnswers(initialData.answers)
-    }
-    if (initialData?.cover_letter) {
-      setGeneratedLetter(initialData.cover_letter)
-    }
-  }, [initialData])
-
-  // Loading steps animation
+  // Fixed useEffect with proper dependency
   useEffect(() => {
     let interval
     if (isLoading) {
@@ -57,7 +47,7 @@ export default function CoverLetterBuilder({
       setLoadingStep(0)
     }
     return () => clearInterval(interval)
-  }, [isLoading])
+  }, [isLoading, loadingSteps.length])
 
   const handleAnswerChange = (questionId, answer) => {
     setAnswers(prev => ({
