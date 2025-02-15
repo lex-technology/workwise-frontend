@@ -73,7 +73,7 @@ export default function CareerCoach() {
             Want to be notified when coaching becomes available?
           </h2>
           <p className="text-gray-600 mb-6">
-            Return to your dashboard and we'll notify you as soon as our career coaching platform launches.
+            Return to your dashboard and we&apos;ll notify you as soon as our career coaching platform launches.
           </p>
           <Link 
             href="/dashboard"

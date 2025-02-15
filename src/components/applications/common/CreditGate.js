@@ -22,7 +22,7 @@ export const CreditGate = ({
       ) : (
         <div className="text-center p-4">
           <p className="text-gray-600 mb-4">
-            You've run out of credits. Upgrade your plan to continue.
+            You&apos;ve run out of credits. Upgrade your plan to continue.
           </p>
           <Link 
             href="/pricing" 

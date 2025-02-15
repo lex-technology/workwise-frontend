@@ -125,7 +125,7 @@ export default function SkillsAnalysisModal({ isOpen, onClose, currentSkills, on
                     {/* Show message if no skills are present */}
                     {!hasSoftSkills && !hasTechnicalSkills && (
                         <div className="text-center py-4 text-gray-500">
-                            No skills found. Click 'Improve with AI' to get suggestions based on your experience and job description.
+                            No skills found. Click &apos;Improve with AI&apos; to get suggestions based on your experience and job description.
                         </div>
                     )}
                 </div>
