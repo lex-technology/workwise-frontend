@@ -18,9 +18,8 @@ import {
 } from "@/components/ui/select"
 import { getStatusStyle } from '../utils/statusStyles'
 import { ApplicationDatePicker } from './ApplicationDatePicker'
-import { PremiumOverlay } from './PremiumOverlay'
-import { useApplicationLimit } from '../hooks/useApplicationLimit'
-import { useRouter } from 'next/router'
+
+
 // We extract the SortButton to keep the table component cleaner
 const SortButton = ({ label, sortKey, onSort }) => (
   <Button
