@@ -96,7 +96,7 @@ export function useResumeData(id) {
       if (!token) throw new Error('No token available')
 
       const startTime = performance.now()
-      const response = await fetch(`http://localhost:8000/api/get-resume/${id}`, {
+      const response = await fetch(`/api/get-resume/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

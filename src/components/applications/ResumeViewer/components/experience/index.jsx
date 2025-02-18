@@ -17,12 +17,12 @@ const ExperienceModalWrapper = ({ resumeId, experienceId, onClose }) => {
         const checkAndRenderExperience = async () => {
             try {
                 // First check if analysis exists
-                const analysisResponse = await fetchWithAuth(`http://localhost:8000/api/experience/${experienceId}/analysis`);
+                const analysisResponse = await fetchWithAuth(`/api/experience/${experienceId}/analysis`);
                 
                 // If no analysis, only fetch resume data for initial state
                 if (!analysisResponse.analysis) {
                     console.log('No analysis found, fetching resume data for initial view');
-                    const resumeData = await fetchWithAuth(`http://localhost:8000/api/get-resume/${resumeId}`);
+                    const resumeData = await fetchWithAuth(`/api/get-resume/${resumeId}`);
                     const experience = resumeData.professional_experience.find(
                         exp => exp.id.toString() === experienceId.toString()
                     );
@@ -55,7 +55,7 @@ const ExperienceModalWrapper = ({ resumeId, experienceId, onClose }) => {
 
                 // If analysis exists, fetch resume data for full context
                 console.log('Analysis found, fetching resume data for analysis view');
-                const resumeData = await fetchWithAuth(`http://localhost:8000/api/get-resume/${resumeId}`);
+                const resumeData = await fetchWithAuth(`/api/get-resume/${resumeId}`);
                 const experience = resumeData.professional_experience.find(
                     exp => exp.id.toString() === experienceId.toString()
                 );

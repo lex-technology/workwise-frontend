@@ -178,7 +178,7 @@ export function AuthProvider({ children }) {
   const signup = async (email, password) => {
     try {
       // Replace direct Supabase call with backend API call
-      const response = await fetch('http://localhost:8000/api/auth/signup', {
+      const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

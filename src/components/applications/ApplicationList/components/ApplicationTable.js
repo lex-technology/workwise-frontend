@@ -18,9 +18,8 @@ import {
 } from "@/components/ui/select"
 import { getStatusStyle } from '../utils/statusStyles'
 import { ApplicationDatePicker } from './ApplicationDatePicker'
-import { PremiumOverlay } from './PremiumOverlay'
-import { useApplicationLimit } from '../hooks/useApplicationLimit'
-import { useRouter } from 'next/router'
+
+
 // We extract the SortButton to keep the table component cleaner
 const SortButton = ({ label, sortKey, onSort }) => (
   <Button
@@ -74,30 +73,7 @@ export function ApplicationTable({
         </>
       )
     
-      // Empty state
-    //   if (applications.length === 0) {
-    //     return (
-    //       <Table>
-    //         {/* ... table header ... */}
-    //         <TableBody>
-    //           <TableRow>
-    //             <TableCell colSpan={5} className="text-center py-12">
-    //               <div className="flex flex-col items-center gap-4">
-    //                 <p className="text-gray-500">No applications yet</p>
-    //                 <Button
-    //                   onClick={onCreateClick}
-    //                   className="bg-indigo-600 hover:bg-indigo-700 text-white"
-    //                 >
-    //                   <PlusCircle className="mr-2 h-4 w-4" />
-    //                   Create Your First Application
-    //                 </Button>
-    //               </div>
-    //             </TableCell>
-    //           </TableRow>
-    //         </TableBody>
-    //       </Table>
-    //     )
-    //   }
+  
     if (applications.length === 0) {
         return (
           <Table>
