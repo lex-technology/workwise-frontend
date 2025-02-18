@@ -101,7 +101,7 @@ export default function JDViewer({ resumeData, refreshData }) {
       
       // Start analysis
       console.log('Calling analyze-jd endpoint');
-      const response = await fetch(`http://localhost:8000/api/analyze-jd/${resumeData.id}`, {
+      const response = await fetch(`/api/analyze-jd/${resumeData.id}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -123,7 +123,7 @@ export default function JDViewer({ resumeData, refreshData }) {
         pollCount++;
         console.log(`Polling attempt ${pollCount}`);
   
-        const checkResponse = await fetch(`http://localhost:8000/api/check-analysis/${resumeData.id}`, {
+        const checkResponse = await fetch(`/api/check-analysis/${resumeData.id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

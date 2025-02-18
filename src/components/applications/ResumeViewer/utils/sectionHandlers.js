@@ -52,7 +52,7 @@ export async function updateSection(resumeId, sectionTitle, newContent) {
     const loadingToast = toast.loading('Saving changes...');
     
     try {
-        const response = await fetch('http://localhost:8000/api/resume/update-section', {
+        const response = await fetch('/api/resume/update-section', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ export async function updateExperiencePoints(resumeId, experienceId, changes) {
 
         console.log('Final request body:', JSON.stringify(requestBody, null, 2));
 
-        const response = await fetch('http://localhost:8000/api/resume/update-experience-points', {
+        const response = await fetch('/api/resume/update-experience-points', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

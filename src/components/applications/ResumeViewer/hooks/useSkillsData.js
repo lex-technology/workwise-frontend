@@ -98,7 +98,7 @@ export function useSkillsData(resumeData, resumeId) {
       }
 
       const response = await fetchWithAuth(
-        `http://localhost:8000/api/resume/${resumeId}/skills-analysis`
+        `/api/resume/${resumeId}/skills-analysis`
       );
 
       if (response.analysis) {
@@ -124,7 +124,7 @@ export function useSkillsData(resumeData, resumeId) {
       setState(prev => ({ ...prev, isLoading: true }));
 
       const response = await fetchWithAuth(
-        'http://localhost:8000/api/resume/analyze-skills',
+        '/api/resume/analyze-skills',
         {
           method: 'POST',
           body: JSON.stringify({

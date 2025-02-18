@@ -98,7 +98,7 @@ export default function CoverLetterBuilder({
         job_description: resumeData.job_description
       }
 
-      const data = await fetchWithAuth('http://localhost:8000/api/generate-cover-letter', {
+      const data = await fetchWithAuth('/api/generate-cover-letter', {
         method: 'POST',
         body: JSON.stringify(requestBody),
       })

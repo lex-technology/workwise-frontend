@@ -38,7 +38,7 @@ export const useParsedResumes = () => {
                 const token = getToken();
                 console.log('Making API request...');
                 
-                const response = await fetch('http://localhost:8000/api/parsed-resumes', {
+                const response = await fetch('/api/parsed-resumes', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -93,7 +93,7 @@ export const useParsedResumes = () => {
         sessionStorage.removeItem(CACHE_KEY);
         try {
             const token = getToken();
-            const response = await fetch('http://localhost:8000/api/parsed-resumes', {
+            const response = await fetch('/api/parsed-resumes', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

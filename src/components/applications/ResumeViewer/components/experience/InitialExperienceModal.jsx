@@ -23,7 +23,7 @@ export default function InitialExperienceModal({
             setAnalysisStartTime(Date.now());
             
            
-            const data = await fetchWithAuth('http://localhost:8000/api/analyze-experience', {
+            const data = await fetchWithAuth('/api/analyze-experience', {
                 method: 'POST',
                 body: JSON.stringify({
                     resumeId,

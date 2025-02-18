@@ -68,7 +68,7 @@ export default function LoadingPage() {
   const handleResumeParse = async (formData, token) => {
     try {
       console.log('Making parse-resume API call...');
-      const response = await fetch('http://localhost:8000/api/parse-resume', {
+      const response = await fetch('/api/parse-resume', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
