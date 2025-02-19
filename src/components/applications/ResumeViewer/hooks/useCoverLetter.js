@@ -22,14 +22,12 @@ export function useCoverLetter(resumeId) {
       
       // Check if cache is expired
       if (cached.timestamp && Date.now() - cached.timestamp > CACHE_DURATION) {
-        console.log('🕒 Cache expired, removing old data')
         sessionStorage.removeItem(getCacheKey(resumeId))
         return null
       }
 
       return cached.data
     } catch (error) {
-      console.error('Error reading cache:', error)
       return null
     }
   }
@@ -42,37 +40,31 @@ export function useCoverLetter(resumeId) {
       }
       sessionStorage.setItem(getCacheKey(resumeId), JSON.stringify(cacheData))
     } catch (error) {
-      console.error('Error setting cache:', error)
+      // Silently fail if cache setting fails
     }
   }
 
   const fetchCoverLetter = async (skipCache = false) => {
     if (!resumeId) {
-      console.log('🔍 No resume ID provided for cover letter')
       setIsLoading(false)
       return
     }
-
-    console.log('🔄 Starting fetch process for cover letter of resume:', resumeId)
 
     try {
       // Check cache first if not skipping
       if (!skipCache) {
         const cachedData = getCachedData()
         if (cachedData) {
-          console.log('✅ Found valid cached cover letter data')
           setCoverLetterData(cachedData)
           setIsLoading(false)
           return
         }
       }
 
-      console.log(skipCache ? '🔄 Forced refresh - Making API call' : '❌ No valid cache - Making API call')
-
       const token = getToken()
       if (!token) throw new Error('No token available')
 
-      const response = await fetch(`api/get-cover-letter/${resumeId}`, {
+      const response = await fetch(`/api/get-cover-letter/${resumeId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -81,17 +73,14 @@ export function useCoverLetter(resumeId) {
       if (!response.ok) throw new Error('Failed to fetch cover letter data')
 
       const data = await response.json()
-      console.log('📥 Received cover letter data from API')
 
       // Cache the new data
       setCachedData(data)
       
       setCoverLetterData(data)
       setIsError(false)
-      console.log('✅ Cover letter data successfully cached and set')
 
     } catch (error) {
-      console.error('❌ Error in cover letter fetch process:', error)
       setIsError(true)
     } finally {
       setIsLoading(false)
@@ -113,12 +102,11 @@ export function useCoverLetter(resumeId) {
         if (cachedData?.timestamp) {
           const age = Date.now() - cachedData.timestamp
           if (age > CACHE_DURATION) {
-            console.log('🔄 Background refresh triggered')
             await fetchCoverLetter(true)
           }
         }
       } catch (error) {
-        console.error('Background refresh error:', error)
+        // Silently fail background refresh
       }
     }
 
@@ -127,7 +115,6 @@ export function useCoverLetter(resumeId) {
   }, [resumeId])
 
   const saveCoverLetter = async (editedLetter) => {
-    console.log('🔄 Starting save process for cover letter')
     setIsSaving(true)
     
     try {
@@ -135,7 +122,7 @@ export function useCoverLetter(resumeId) {
       if (!token) throw new Error('No token available')
 
       const response = await fetch(
-        `api/save-cover-letter/${resumeId}`,
+        `/api/save-cover-letter/${resumeId}`,
         {
           method: 'PUT',
           headers: {
@@ -163,7 +150,6 @@ export function useCoverLetter(resumeId) {
       
       return true
     } catch (error) {
-      console.error('❌ Error saving cover letter:', error)
       toast.error('Failed to save cover letter')
       throw error
     } finally {
