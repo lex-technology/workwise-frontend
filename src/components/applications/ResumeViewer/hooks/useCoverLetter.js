@@ -72,7 +72,7 @@ export function useCoverLetter(resumeId) {
       const token = getToken()
       if (!token) throw new Error('No token available')
 
-      const response = await fetch(`http://localhost:8000/api/get-cover-letter/${resumeId}`, {
+      const response = await fetch(`api/get-cover-letter/${resumeId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -135,7 +135,7 @@ export function useCoverLetter(resumeId) {
       if (!token) throw new Error('No token available')
 
       const response = await fetch(
-        `http://localhost:8000/api/save-cover-letter/${resumeId}`,
+        `api/save-cover-letter/${resumeId}`,
         {
           method: 'PUT',
           headers: {
