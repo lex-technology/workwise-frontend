@@ -1,17 +1,20 @@
 'use client';
-import { createContext, useContext, useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/lib/supabase';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
-
-const AuthContext = createContext({});
+const AuthContext = createContext({
+  user: null,
+  userProfile: null,
+  login: () => Promise.resolve(),
+  signup: () => Promise.resolve(),
+  logout: () => Promise.resolve(),
+  loading: true,
+  getToken: () => null,
+  supabase,
+});
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -69,7 +72,7 @@ export function AuthProvider({ children }) {
     return profileSubscription;
   };
 
-  const handleTokenExpiration = () => {
+  const handleTokenExpiration = useCallback(() => {
     console.log('Token expired, logging out user');
     setUser(null);
     setUserProfile(null);
@@ -79,22 +82,25 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('user');
     toast.error('Your session has expired. Please log in again.');
     router.push('/auth');
-  };
+  }, [router]);
 
-  const isTokenValid = (token) => {
-    try {
-      const decoded = jwtDecode(token);
-      const isValid = decoded.exp * 1000 > Date.now();
-      if (!isValid) {
+  const isTokenValid = useCallback(
+    (token) => {
+      try {
+        const decoded = jwtDecode(token);
+        const isValid = decoded.exp * 1000 > Date.now();
+        if (!isValid) {
+          handleTokenExpiration();
+        }
+        return isValid;
+      } catch (error) {
+        console.error('Token validation failed:', error);
         handleTokenExpiration();
+        return false;
       }
-      return isValid;
-    } catch (error) {
-      console.error('Token validation failed:', error);
-      handleTokenExpiration();
-      return false;
-    }
-  };
+    },
+    [handleTokenExpiration]
+  );
 
   // Check for existing session on mount
   useEffect(() => {
@@ -149,7 +155,7 @@ export function AuthProvider({ children }) {
     };
 
     checkAuth();
-  }, []);
+  }, [handleTokenExpiration, isTokenValid]);
 
   const login = async (email, password, rememberMe = false) => {
     try {
