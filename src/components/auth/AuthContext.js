@@ -14,6 +14,7 @@ const AuthContext = createContext({
   loading: true,
   getToken: () => null,
   supabase,
+  setUserProfile: () => {},
 });
 
 export function AuthProvider({ children }) {
@@ -251,6 +252,7 @@ export function AuthProvider({ children }) {
         loading,
         getToken,
         supabase,
+        setUserProfile,
       }}
     >
       {!loading && children}
