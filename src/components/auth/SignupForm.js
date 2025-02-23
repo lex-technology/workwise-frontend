@@ -23,7 +23,7 @@ export default function SignupForm() {
       if (result.email_verification_required) {
         router.push('/auth/verify'); // Add a verification page to inform users
       } else {
-        router.push('/login');
+        router.push('/auth');
       }
     } catch (error) {
       setError(error.message);
