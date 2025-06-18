@@ -31,7 +31,8 @@ export default function ProfileDropdown({
     <div
       ref={menuRef}
       onMouseLeave={() => !buttonRef.current.contains(document.activeElement) && setShowProfileMenu(false)}
-      className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl py-2 z-50 border border-gray-100"
+      className="absolute right-0 mt-2 w-80 max-w-[calc(100vw-2rem)] bg-white rounded-lg shadow-xl py-2 z-50 border border-gray-100 
+                 sm:right-0 max-[480px]:right-2 max-[480px]:w-72"
     >
       {/* User Info Section */}
       <div className="px-4 py-3 bg-gradient-to-r from-indigo-500 to-cyan-600 text-white rounded-t-lg">

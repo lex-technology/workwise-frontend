@@ -172,25 +172,25 @@ export default function CoverLetterBuilder({
     <div className="flex flex-col items-center">
       <button
         disabled
-        className="px-6 py-3 rounded-lg font-medium text-white bg-blue-400 cursor-not-allowed mb-4"
+        className="w-full sm:w-auto px-6 py-3 rounded-lg font-medium text-white bg-blue-400 cursor-not-allowed mb-4"
       >
         <span className="flex items-center justify-center">
-          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <svg className="animate-spin -ml-1 mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          Generating...
+          <span className="text-sm sm:text-base">Generating...</span>
         </span>
       </button>
-      <div className="flex flex-col items-center">
-        <div className="text-sm text-gray-600 font-medium mb-2">
+      <div className="flex flex-col items-center w-full">
+        <div className="text-xs sm:text-sm text-gray-600 font-medium mb-2 text-center">
           {loadingSteps[loadingStep]}
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-1 justify-center">
           {loadingSteps.map((_, index) => (
             <div
               key={index}
-              className={`h-1.5 w-8 rounded-full transition-colors duration-300 ${
+              className={`h-1.5 w-6 sm:w-8 rounded-full transition-colors duration-300 ${
                 index === loadingStep ? 'bg-blue-600' : 'bg-gray-200'
               }`}
             />
@@ -205,37 +205,43 @@ export default function CoverLetterBuilder({
       {/* <CreditGate> */}
       {/* Generated Content */}
       {generatedLetter && (
-        <div className="mb-6">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="text-lg font-semibold text-gray-900">Generated Cover Letter</h3>
-            <div className="flex items-center gap-3">
+        <div className="mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-3">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900">Generated Cover Letter</h3>
+            
+            {/* Mobile Action Buttons */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
               {/* Export buttons */}
-              <button
-                onClick={handleExportPDF}
-                className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-700 flex items-center gap-2"
-                title="Export as PDF"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-                PDF
-              </button>
-              <button
-                onClick={handleExportWord}
-                className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-700 flex items-center gap-2"
-                title="Export as Word"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-                </svg>
-                Word
-              </button>
-              {/* Divider */}
-              <div className="h-6 w-px bg-gray-300"></div>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleExportPDF}
+                  className="flex-1 sm:flex-none px-3 py-2 text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-700 flex items-center justify-center gap-2 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
+                  title="Export as PDF"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                  <span className="hidden sm:inline">PDF</span>
+                </button>
+                <button
+                  onClick={handleExportWord}
+                  className="flex-1 sm:flex-none px-3 py-2 text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-700 flex items-center justify-center gap-2 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
+                  title="Export as Word"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                  </svg>
+                  <span className="hidden sm:inline">Word</span>
+                </button>
+              </div>
+              
+              {/* Divider - hidden on mobile */}
+              <div className="hidden sm:block h-6 w-px bg-gray-300"></div>
+              
               {/* Edit button */}
               <button
                 onClick={isEditing ? handleSave : handleEdit}
-                className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700"
+                className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 border border-blue-600 rounded-md hover:bg-blue-50 transition-colors"
               >
                 {isEditing ? 'Save Changes' : 'Edit Letter'}
               </button>
@@ -245,11 +251,11 @@ export default function CoverLetterBuilder({
             <textarea
               value={editableLetter}
               onChange={(e) => setEditableLetter(e.target.value)}
-              className="w-full p-6 min-h-[400px] bg-white rounded-lg border shadow-sm text-justify font-serif text-gray-800 leading-relaxed focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-4 sm:p-6 min-h-[300px] sm:min-h-[400px] bg-white rounded-lg border shadow-sm text-justify font-serif text-gray-800 leading-relaxed focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
             />
           ) : (
-            <div className="prose max-w-none bg-white p-6 rounded-lg border shadow-sm">
-              <div className="text-justify font-serif text-gray-800 leading-relaxed whitespace-pre-wrap">
+            <div className="prose max-w-none bg-white p-4 sm:p-6 rounded-lg border shadow-sm">
+              <div className="text-justify font-serif text-gray-800 leading-relaxed whitespace-pre-wrap text-sm sm:text-base">
                 {generatedLetter}
               </div>
             </div>
@@ -258,21 +264,21 @@ export default function CoverLetterBuilder({
       )}
 
       {/* Question Card */}
-      <div className="bg-gray-50 rounded-lg p-6 mb-6">
-        <div className="flex justify-between items-center mb-4">
+      <div className="bg-gray-50 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900">
               Question {currentQuestionIndex + 1} of {QUESTIONS.length}
             </h3>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
               All questions are optional but help improve the quality of your cover letter
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-full sm:w-auto">
             <button
               onClick={handlePrevious}
               disabled={currentQuestionIndex === 0}
-              className={`px-4 py-2 rounded-md text-sm font-medium
+              className={`flex-1 sm:flex-none px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium
                 ${currentQuestionIndex === 0
                   ? 'bg-gray-100 text-gray-400'
                   : 'bg-white text-gray-600 hover:bg-gray-100'
@@ -284,7 +290,7 @@ export default function CoverLetterBuilder({
             <button
               onClick={handleNext}
               disabled={currentQuestionIndex === QUESTIONS.length - 1}
-              className={`px-4 py-2 rounded-md text-sm font-medium
+              className={`flex-1 sm:flex-none px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium
                 ${currentQuestionIndex === QUESTIONS.length - 1
                   ? 'bg-gray-100 text-gray-400'
                   : 'bg-white text-gray-600 hover:bg-gray-100'
@@ -296,12 +302,12 @@ export default function CoverLetterBuilder({
           </div>
         </div>
 
-        <p className="text-gray-700 mb-3">{currentQuestion.question}</p>
+        <p className="text-sm sm:text-base text-gray-700 mb-3">{currentQuestion.question}</p>
         <textarea
           value={answers[currentQuestion.id] || ''}
           onChange={(e) => handleAnswerChange(currentQuestion.id, e.target.value)}
           placeholder={currentQuestion.placeholder}
-          className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
           rows={4}
         />
       </div>
@@ -319,11 +325,11 @@ export default function CoverLetterBuilder({
       ) : (
         <button
           onClick={handleGenerate}
-          className="px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+          className="w-full sm:w-auto px-6 py-3 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors text-sm sm:text-base"
         >
           Generate Cover Letter
-          </button>
-        )}
+        </button>
+      )}
       {/* </CreditGate> */}
     </div>
   )
