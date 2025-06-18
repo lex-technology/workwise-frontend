@@ -1,36 +1,5 @@
 import { useState, useMemo } from 'react'
 
-// export function useApplicationFilters(applications) {
-//   const [searchTerm, setSearchTerm] = useState('')
-//   const [statusFilter, setStatusFilter] = useState('All')
-
-//   const filteredApplications = useMemo(() => {
-//     return applications.filter(app => 
-//       (statusFilter === 'All' || app.status === statusFilter) &&
-//       (app.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//        app.position.toLowerCase().includes(searchTerm.toLowerCase()))
-//     )
-//   }, [applications, statusFilter, searchTerm])
-
-//   const statusCounts = useMemo(() => {
-//     return applications.reduce((acc, app) => {
-//       acc[app.status] = (acc[app.status] || 0) + 1
-//       return acc
-//     }, {})
-//   }, [applications])
-
-//   return {
-//     searchTerm,
-//     setSearchTerm,
-//     statusFilter,
-//     setStatusFilter,
-//     filteredApplications,
-//     statusCounts
-//   }
-// }
-
-// hooks/useApplicationFilters.js
-// hooks/useApplicationFilters.js
 
 export function useApplicationFilters(applications = [], isPaidUser = false, maxFreeApplications = 5) {
   const [searchTerm, setSearchTerm] = useState('')

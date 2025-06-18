@@ -71,7 +71,7 @@ function AIAnalysisModal({
             }
 
             // Make new fetch request
-            const fetchPromise = fetchWithAuth(`http://localhost:8000/api/resume/${resumeId}/summary-analysis`);
+            const fetchPromise = fetchWithAuth(`/api/resume/${resumeId}/summary-analysis`);
             fetchingStates.set(resumeId, fetchPromise);
 
             const data = await fetchPromise;
@@ -116,7 +116,7 @@ function AIAnalysisModal({
     const handleSubmitQuestionnaire = async (answers) => {
         try {
             setLoading(true);
-            const data = await fetchWithAuth('http://localhost:8000/api/resume/analyze-executive-summary', {
+            const data = await fetchWithAuth('/api/resume/analyze-executive-summary', {
                 method: 'POST',
                 body: JSON.stringify({
                     resumeId,

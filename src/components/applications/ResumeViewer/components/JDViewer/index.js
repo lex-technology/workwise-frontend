@@ -6,15 +6,69 @@ import { Loader2 } from 'lucide-react'
 import { useAuth } from '@/components/auth/AuthContext'
 
 export default function JDViewer({ resumeData, refreshData }) {
-  console.log('JDViewer component mounted')  // Add this
-  if (!resumeData) {
-    console.log('No resumeData received in JDViewer')  // Add this
-    return null
-  }
-  console.log('JDViewer received data:', resumeData) 
+  // Move all hooks to the top level
   const { getToken } = useAuth()
   const [isAnalyzing, setIsAnalyzing] = useState(false)
-  
+
+    // Move useMemo to top level
+    const processedJD = useMemo(() => {
+      if (!resumeData?.job_description) {
+        return []
+      }
+    
+      if (resumeData?.jd_analysis && Array.isArray(resumeData.jd_analysis) && resumeData.jd_analysis.length > 0) {
+        const sortedAnalysis = [...resumeData.jd_analysis].sort((a, b) => 
+          b.line_text.length - a.line_text.length
+        )
+    
+        let fullText = resumeData.job_description
+        const markers = []
+    
+        // Create markers for highlights
+        sortedAnalysis.forEach((item, index) => {
+          if (!item.line_text) return
+          const marker = `___HIGHLIGHT_${index}___`
+          markers.push({ marker, item })
+          fullText = fullText.split(item.line_text).join(marker)
+        })
+    
+        // Process segments
+        const segments = []
+        let currentText = ''
+    
+        for (let i = 0; i < fullText.length; i++) {
+          let foundMarker = false
+          for (const { marker, item } of markers) {
+            if (fullText.slice(i, i + marker.length) === marker) {
+              if (currentText) {
+                segments.push({ type: 'text', content: currentText })
+                currentText = ''
+              }
+              segments.push({ type: 'highlight', item })
+              i += marker.length - 1
+              foundMarker = true
+              break
+            }
+          }
+          if (!foundMarker) {
+            currentText += fullText[i]
+          }
+        }
+    
+        if (currentText) {
+          segments.push({ type: 'text', content: currentText })
+        }
+    
+        return segments
+      }
+    
+      return [{ type: 'text', content: resumeData?.job_description || '' }]
+    }, [resumeData?.job_description, resumeData?.jd_analysis]) 
+  // Early return with proper null check
+  if (!resumeData) {
+    return null
+  }
+
   const skillTypeStyles = {
     'technical skills': 'bg-blue-100/80',
     'domain knowledge': 'bg-purple-100/80',
@@ -47,7 +101,7 @@ export default function JDViewer({ resumeData, refreshData }) {
       
       // Start analysis
       console.log('Calling analyze-jd endpoint');
-      const response = await fetch(`http://localhost:8000/api/analyze-jd/${resumeData.id}`, {
+      const response = await fetch(`/api/analyze-jd/${resumeData.id}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -69,7 +123,7 @@ export default function JDViewer({ resumeData, refreshData }) {
         pollCount++;
         console.log(`Polling attempt ${pollCount}`);
   
-        const checkResponse = await fetch(`http://localhost:8000/api/check-analysis/${resumeData.id}`, {
+        const checkResponse = await fetch(`/api/check-analysis/${resumeData.id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -172,83 +226,6 @@ export default function JDViewer({ resumeData, refreshData }) {
     )
   }
 
-  const processedJD = useMemo(() => {
-    console.log('Processing JD with data:', {
-      hasJobDescription: !!resumeData?.job_description,
-      hasJDAnalysis: !!resumeData?.jd_analysis,
-      analysisContent: resumeData?.jd_analysis,
-      analysisStatus: resumeData?.analysis_status
-    })
-  
-    if (!resumeData?.job_description) {
-      return []
-    }
-  
-    // Changed condition: if we have jd_analysis array, use it
-    if (resumeData.jd_analysis && Array.isArray(resumeData.jd_analysis) && resumeData.jd_analysis.length > 0) {
-      console.log('Using existing analysis:', resumeData.jd_analysis)
-      
-      const sortedAnalysis = [...resumeData.jd_analysis].sort((a, b) => 
-        b.line_text.length - a.line_text.length
-      )
-  
-      let fullText = resumeData.job_description
-      const markers = []
-  
-      // Create markers for highlights
-      sortedAnalysis.forEach((item, index) => {
-        if (!item.line_text) return
-        const marker = `___HIGHLIGHT_${index}___`
-        markers.push({ marker, item })
-        fullText = fullText.split(item.line_text).join(marker)
-      })
-  
-      // Process segments
-      const segments = []
-      let currentText = ''
-  
-      for (let i = 0; i < fullText.length; i++) {
-        let foundMarker = false
-        for (const { marker, item } of markers) {
-          if (fullText.slice(i, i + marker.length) === marker) {
-            if (currentText) {
-              segments.push({ type: 'text', content: currentText })
-              currentText = ''
-            }
-            segments.push({ type: 'highlight', item })
-            i += marker.length - 1
-            foundMarker = true
-            break
-          }
-        }
-        if (!foundMarker) {
-          currentText += fullText[i]
-        }
-      }
-  
-      if (currentText) {
-        segments.push({ type: 'text', content: currentText })
-      }
-  
-      console.log('Created segments:', segments)
-      return segments
-    }
-  
-    // If no analysis, show plain text
-    return [{ type: 'text', content: resumeData.job_description }]
-  }, [resumeData?.job_description, resumeData?.jd_analysis])
-
-  // const renderContent = (segments) => {
-  //   return segments.map((segment, index) => {
-  //     if (typeof segment === 'string') {
-  //       return <React.Fragment key={index}>{segment}</React.Fragment>
-  //     }
-  //     if (segment.type === 'highlight') {
-  //       return renderHighlightedText(segment.item)
-  //     }
-  //     return null
-  //   })
-  // }
 
   const renderContent = (segments) => {
     // console.log('RenderContent called with segments:', segments)

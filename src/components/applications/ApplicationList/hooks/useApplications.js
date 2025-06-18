@@ -37,7 +37,7 @@ export function useApplications(itemsPerPage = 10) {
         return
       }
 
-      const data = await fetchWithAuth(`http://localhost:8000/api/get-all-applications/${user.id}`)
+      const data = await fetchWithAuth(`/api/get-all-applications/${user.id}`)
       setApplications(data.applications)
       cacheService.setCache(cacheKey, data.applications, token)
     } catch (err) {
@@ -63,7 +63,7 @@ export function useApplications(itemsPerPage = 10) {
       }
 
       try {
-        await fetchWithAuth(`http://localhost:8000/api/update-application-status/${appId}?status=${newStatus}`, {
+        await fetchWithAuth(`/api/update-application-status/${appId}?status=${newStatus}`, {
           method: 'PUT'
         })
         
@@ -103,7 +103,7 @@ export function useApplications(itemsPerPage = 10) {
     try {
       const formattedDate = format(date, 'yyyy-MM-dd')
       
-      await fetchWithAuth(`http://localhost:8000/api/update-application-date/${appId}`, {
+      await fetchWithAuth(`/api/update-application-date/${appId}`, {
         method: 'PUT',
         body: JSON.stringify({
           date_applied: formattedDate

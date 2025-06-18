@@ -29,7 +29,7 @@ export function useResumeAnalysis(resumeId, resumeData, onAnalysisComplete) {
                 setAnalysisStatus('in_progress');
                 
                 console.log('Making API call to analyze-jd endpoint');
-                const response = await fetchWithAuth(`http://localhost:8000/api/analyze-jd/${resumeId}`, {
+                const response = await fetchWithAuth(`/api/analyze-jd/${resumeId}`, {
                     method: 'POST'
                 });
                 console.log('JD analysis API response:', response);

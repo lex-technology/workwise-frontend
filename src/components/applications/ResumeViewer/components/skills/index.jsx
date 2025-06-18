@@ -76,7 +76,7 @@ function AIAnalysisModal({
                 
                 if (!analysisData) {
                     console.log('Cache miss, fetching skills analysis from API');
-                    const analysisResponse = await fetchWithAuth(`http://localhost:8000/api/resume/${resumeId}/skills-analysis`);
+                    const analysisResponse = await fetchWithAuth(`/api/resume/${resumeId}/skills-analysis`);
                     analysisData = analysisResponse.analysis;
                     
                     if (analysisData) {
@@ -122,7 +122,7 @@ function AIAnalysisModal({
             // Clear cache before generating new analysis
             skillsAnalysisCache.clear(resumeId);
             
-            const response = await fetchWithAuth('http://localhost:8000/api/resume/analyze-skills', {
+            const response = await fetchWithAuth('/api/resume/analyze-skills', {
                 method: 'POST',
                 body: JSON.stringify({
                     resumeId,

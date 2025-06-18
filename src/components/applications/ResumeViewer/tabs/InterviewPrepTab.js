@@ -10,7 +10,7 @@ export default function InterviewPrepTab() {
           Interview Preparation
         </h2>
         <p className="text-gray-600 max-w-md">
-          This feature is coming soon! We're working on an AI-powered interview preparation tool to help you ace your interviews.
+          This feature is coming soon! We&apos;re working on an AI-powered interview preparation tool to help you ace your interviews.
         </p>
         <div className="mt-6 text-sm text-blue-600">
           🚀 Stay tuned for updates!
