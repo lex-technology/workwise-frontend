@@ -1,6 +1,6 @@
 'use client'
 import { useState, useRef } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { FileText, User, DollarSign, HeadphonesIcon, Menu, X, Settings, CreditCard, LogOut } from 'lucide-react'
 import { useAuth } from '@/components/auth/AuthContext'
@@ -9,6 +9,7 @@ import ProfileDropdown from './ProfileDropdown'
 export default function TopNav() {
   const pathname = usePathname()
   const { user, logout } = useAuth()
+  const router = useRouter()
   const [showProfileMenu, setShowProfileMenu] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const buttonRef = useRef(null)
@@ -24,6 +25,11 @@ export default function TopNav() {
     setShowProfileMenu(!showProfileMenu)
   }
 
+  const handleLogoClick = (e) => {
+    e.preventDefault()
+    router.push(user ? '/dashboard' : '/')
+  }
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
@@ -37,9 +43,13 @@ export default function TopNav() {
     <div className="w-full bg-[#2A2B3D] text-white">
       <div className="container mx-auto px-2 sm:px-4">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="text-lg sm:text-xl font-semibold flex-shrink-0">
+          <a 
+            href="#" 
+            onClick={handleLogoClick}
+            className="text-lg sm:text-xl font-semibold flex-shrink-0 cursor-pointer"
+          >
             WorkWise
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-4">
@@ -87,7 +97,6 @@ export default function TopNav() {
                     }`}
                   >
                     <User size={18} />
-                    <span className="text-sm truncate max-w-32">{user?.email}</span>
                   </button>
 
                   {showProfileMenu && (
