@@ -192,9 +192,20 @@ export default function ExperienceAnalysisResultModal({
         };
     
         const renderDetailPanel = () => {
-            if (!selectedPoint) return null;
+            if (!selectedPoint) {
+                return (
+                    <div className="w-full p-6 sm:p-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 text-center">
+                        <div className="text-gray-500">
+                            <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                            </svg>
+                            <p className="text-sm">Select a point to see detailed analysis</p>
+                        </div>
+                    </div>
+                );
+            }
     
-            const panelClasses = "w-full p-6 bg-white rounded-lg shadow-sm min-h-[500px] mt-4";
+            const panelClasses = "w-full p-4 sm:p-6 bg-white rounded-lg shadow-sm border border-gray-200 min-h-[300px] sm:min-h-[400px]";
     
             switch (activeView) {
                 case 'impact':
@@ -242,49 +253,80 @@ export default function ExperienceAnalysisResultModal({
         <Modal 
             isOpen={isOpen} 
             onClose={onClose} 
-            maxWidth="max-w-[150rem]"
-            className="w-[110vw]"
+            size="full"
+            className="mx-4 sm:mx-6 lg:mx-8"
         >
-            <div className="flex flex-col h-[90vh]">
-                <div className="p-6 flex-grow overflow-auto">
-                    <div className="flex gap-12">
-                        <div className="w-[40%]">
-                            <ExperiencePoints
-                                points={analysisResults.experience_analysis.points_analysis}
-                                activeView={activeView}
-                                getHighlightColor={getHighlightColor}
-                                onPointClick={setSelectedPoint}
-                                modifiedPoints={modifiedPoints}
-                                onDeletePoint={handleDeletePoint}
-                            />
+            <div className="flex flex-col h-[85vh] sm:h-[90vh]">
+                {/* Header */}
+                <div className="p-4 sm:p-6 border-b bg-white rounded-t-lg">
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Experience Analysis</h2>
+                    <p className="text-sm text-gray-600 mt-1">Review and improve your experience points</p>
+                </div>
+
+                {/* Main Content */}
+                <div className="flex-grow overflow-hidden">
+                    <div className="flex flex-col lg:flex-row h-full">
+                        {/* Left Panel - Experience Points */}
+                        <div className="w-full lg:w-2/5 border-b lg:border-b-0 lg:border-r border-gray-200 overflow-y-auto">
+                            <div className="p-4 sm:p-6">
+                                <ExperiencePoints
+                                    points={analysisResults.experience_analysis.points_analysis}
+                                    activeView={activeView}
+                                    getHighlightColor={getHighlightColor}
+                                    onPointClick={setSelectedPoint}
+                                    modifiedPoints={modifiedPoints}
+                                    onDeletePoint={handleDeletePoint}
+                                />
+                            </div>
                         </div>
 
-                        <div className="w-[60%]">
-                            <div className="sticky top-4 space-y-4">
-                                <AnalysisTogglePanel
-                                    activeView={activeView}
-                                    onViewChange={setActiveView}
-                                />
-                                {renderDetailPanel()}
+                        {/* Right Panel - Analysis Details */}
+                        <div className="w-full lg:w-3/5 overflow-y-auto">
+                            <div className="p-4 sm:p-6 space-y-4">
+                                {/* Analysis Toggle Panel - Make mobile-friendly */}
+                                <div className="lg:sticky lg:top-0 bg-white z-10">
+                                    <AnalysisTogglePanel
+                                        activeView={activeView}
+                                        onViewChange={setActiveView}
+                                    />
+                                </div>
+                                
+                                {/* Detail Panel */}
+                                <div className="space-y-4">
+                                    {renderDetailPanel()}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Footer with save button */}
-                <div className="border-t p-4 bg-white">
-                    <div className="flex justify-end items-center gap-4">
-                        <button
-                            onClick={handleSaveChanges}
-                            disabled={!hasUnsavedChanges}
-                            className={`px-4 py-2 rounded-lg transition-all ${
-                                hasUnsavedChanges
-                                    ? 'bg-blue-600 text-white hover:bg-blue-700'
-                                    : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                            }`}
-                        >
-                            Save Changes
-                        </button>
+                <div className="border-t p-4 sm:p-6 bg-white rounded-b-lg">
+                    <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                        <div className="text-sm text-gray-600">
+                            {hasUnsavedChanges && (
+                                <span className="text-amber-600">You have unsaved changes</span>
+                            )}
+                        </div>
+                        <div className="flex gap-3">
+                            <button
+                                onClick={onClose}
+                                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleSaveChanges}
+                                disabled={!hasUnsavedChanges}
+                                className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                                    hasUnsavedChanges
+                                        ? 'bg-blue-600 text-white hover:bg-blue-700'
+                                        : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                }`}
+                            >
+                                Save Changes
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

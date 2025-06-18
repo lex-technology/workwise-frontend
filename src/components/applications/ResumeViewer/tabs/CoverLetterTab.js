@@ -178,31 +178,37 @@ export default function CoverLetterTab({ resumeData }) {
   }
 
   return (
-    <div className="flex gap-6">
+    <div className="flex flex-col xl:flex-row gap-4 xl:gap-6">
+      {/* Mobile Header */}
+      <div className="xl:hidden mb-4">
+        <h2 className="text-xl font-semibold text-gray-900">Write Your Cover Letter with AI</h2>
+      </div>
+
       {/* Left Side - JD Viewer */}
-      <div className="w-1/3">
+      <div className="w-full xl:w-1/3 order-1 xl:order-1">
         <JDViewer resumeData={resumeData} />
       </div>
 
       {/* Right Side - Cover Letter Builder */}
-      <div className="w-2/3">
-        <div className="mb-4">
+      <div className="w-full xl:w-2/3 order-2 xl:order-2">
+        {/* Desktop Header */}
+        <div className="hidden xl:block mb-4">
           <h2 className="text-xl font-semibold text-gray-900">Write Your Cover Letter with AI</h2>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border p-6">
+        <div className="bg-white rounded-xl shadow-sm border p-4 sm:p-6">
           {/* Tone Selection */}
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Select Tone
             </label>
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
               {TONE_OPTIONS.map((tone) => (
                 <button
                   key={tone.id}
                   onClick={() => setSelectedTone(tone.id)}
                   className={`
-                    p-3 rounded-lg text-sm font-medium text-center transition-all
+                    p-2 sm:p-3 rounded-lg text-xs sm:text-sm font-medium text-center transition-all
                     ${selectedTone === tone.id
                       ? 'bg-blue-50 text-blue-700 ring-2 ring-blue-600'
                       : 'bg-gray-50 text-gray-600 hover:bg-gray-100'

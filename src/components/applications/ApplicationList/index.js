@@ -116,32 +116,34 @@ export default function ApplicationList() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header Section */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-gray-900">List of Applications</h1>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">List of Applications</h1>
           <p className="mt-1 text-sm text-gray-500">Manage and track your job applications</p>
         </div>
 
         {/* Search and Actions Bar */}
-        <div className="mb-6 flex flex-col gap-4 bg-white p-4 rounded-lg shadow">
-          <div className="flex justify-between items-center gap-4">
+        <div className="mb-6 flex flex-col gap-4 bg-white p-4 sm:p-6 rounded-lg shadow">
+          {/* Search and Create Button */}
+          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
             <SearchBar 
               value={searchTerm}
               onChange={setSearchTerm}
             />
             <Button 
-            onClick={() => router.push(getCreateButtonAction())}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
-            disabled={!canCreateApplication}
+              onClick={() => router.push(getCreateButtonAction())}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white flex-shrink-0 w-full sm:w-auto"
+              disabled={!canCreateApplication}
             >
-            <PlusCircle className="mr-2 h-4 w-4" />
-            {getCreateButtonMessage()}
+              <PlusCircle className="mr-2 h-4 w-4" />
+              <span className="hidden sm:inline">{getCreateButtonMessage()}</span>
+              <span className="sm:hidden">Add Application</span>
             </Button>
           </div>
           
           {/* Status Filters */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 sm:gap-3 overflow-x-auto pb-2">
             {STATUS_OPTIONS.map((status) => (
               <StatusFilter
                 key={status}
